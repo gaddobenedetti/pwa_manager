@@ -1,0 +1,29 @@
+name: pwa_manager
+description: "A Flutter package that enables certain Progressive Web App (PWA) functionality for Flutter Web apps."
+version: 1.0.0
+repository: https://github.com/gaddobenedetti/pwa_manager
+homepage: https://www.gfb-consulting.com
+topics: 
+  - pwa
+
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  web: ^1.0.0
+  qr_flutter: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+# https://kazlauskas.dev/blog/publishing-new-flutter-package/
+# dart pub login
+# dart pub publish --dry-run
