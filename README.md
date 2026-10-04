@@ -10,7 +10,7 @@ _PWA Manager_ is a Flutter package that enables certain Progressive Web App (PWA
 
 If you appricate this package. please consider buying me a beer for my effort. It'll encourage me to maintain this project and develop new ones, and I promise to toast to your good health too!. 
 
-[![image](buymeabeer.png#center)](https://ko-fi.com/A1L728693J)
+[![image](buymeabeer.png)](https://ko-fi.com/A1L728693J)
 
 ## The PWA Manager Widget Constructor
 
