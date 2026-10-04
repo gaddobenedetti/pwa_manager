@@ -7,3 +7,7 @@
 * It can optionally enforce that the app can only be used if installed as a PWA and/or running on a mobile device.
 
 * It will check for updates from the server if the app is installed and prompt the user to update the app.
+
+## 1.0.1
+
+* Minor final tweaks ahead of punlishing.
