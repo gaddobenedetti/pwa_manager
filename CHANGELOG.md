@@ -11,3 +11,9 @@
 ## 1.0.1
 
 * Minor final tweaks ahead of punlishing.
+
+## 1.1.1
+
+* Added advisory note to README.
+
+* General cleanup of code.

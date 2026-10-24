@@ -62,13 +62,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   int _counter = 0;
-  String _debugData = "";
 
   void _incrementCounter() {
     setState(() {
@@ -125,7 +119,6 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Text(_debugData, style: TextStyle(fontSize: 18.0)),
           ],
         ),
       ),

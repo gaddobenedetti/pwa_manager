@@ -11,7 +11,6 @@ import 'src/widget_android_install_prompt.dart';
 import 'src/widget_desktop_prompt.dart';
 import 'src/widget_ios_install_prompt.dart';
 import 'src/widget_update_prompt.dart';
-
 export 'src/update_check.dart';
 
 /*

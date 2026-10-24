@@ -60,11 +60,13 @@ _PWA Manager_ already ships with a default English language landing screen flow 
 
 Basic customisation can be carried out by passing an optional `PwaFormatting` class in the constructor. With this you can change all the text labels used in the landing screens (thus facilitating localisation) as well as the app `logo`, `backgroundColor`, `textColor`, `primaryBrandColor` and `secondaryBrandColor`.
 
+It should be noted that currently the default Android and iOS install screens utilize a Material Design 3 Icon, the app should be wrapped within a `MaterialApp` widget with the `useMaterial3` property set to `true`, otherwise you can use your own design. I will be redesigning these screens in the future to remove this dependancy.
+
 ### Full Customisation.
 
 Alternatively, these screens can be completely be replaced with either stateless or stateful widgets and optionally passed through the constructor. There are a total of five screens:
 
-* **Android Install Prompt**. Used when prompting the user to install on Android via the Chrome browser. The default template for this may be found at `lib/src/widget_android_install_prompt.dart` and a custom version may be passed with the `customAndroidWidgetInstallPrompt` constructor parameter.
+* **Android Install Prompt**. Used when prompting the user to install on Android via the Chrome browser. The default template for this may be found at `lib/src/widget_android_install_prompt.dart` and a custom version may be passed with the `customAndroidWidgetInstallPrompt` constructor parameter. 
 
 * **iOS Install Prompt**. Used when prompting the user to install on iOS via the Safari browser. The default template for this may be found at `lib/src/widget_ios_install_prompt.dart` and a custom version may be passed with the `customIosWidgetInstallPrompt` constructor parameter. Safari 26+ can trigger the native install prompt, while older iOS Safari versions fall back to the manual "Add to Home Screen" instructions.
 
