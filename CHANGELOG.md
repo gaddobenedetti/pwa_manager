@@ -17,3 +17,11 @@
 * Added advisory note to README.
 
 * General cleanup of code.
+
+## 1.2.0
+
+* Added `PwaScreenState` and the `PwaManager` screen-state API: `screenState`, `onScreenStateChanged`, `supportsIdleDetection`, `startIdleDetection` and `stopIdleDetection`.
+
+* Added optional screen wake-lock helpers: `keepScreenOn`, `allowScreenOff` and `wakeLockActive`.
+
+* Bumped the minimum `web` dependency to `^1.1.1`.

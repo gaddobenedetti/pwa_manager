@@ -8,6 +8,8 @@ _PWA Manager_ is a Flutter package that enables certain Progressive Web App (PWA
 
 * It will check for updates from the server if the app is installed and prompt the user to update the app.
 
+* It can listen for app state changes, specifically if the screen is active, in the background, idle or locked.
+
 If you appricate this package. please consider [buying me a beer](https://ko-fi.com/A1L728693J) for my effort. It'll encourage me to maintain this project and develop new ones, and I promise to toast to your good health too!. 
 
 [![image](buymeabeer.png)](https://ko-fi.com/A1L728693J)
@@ -88,6 +90,48 @@ To allow you to construct custom screens, _PWA Manager_ comes with a number of s
 Returns the URL of the PWA. Note that during debug this is naturally on localhost, so it only fully works in release builds.
 
 **PwaManager.updatePwa** Initiates the update PWA process.
+
+**PwaManager.screenState**, **PwaManager.onScreenStateChanged**, **PwaManager.supportsIdleDetection**, **PwaManager.startIdleDetection**, **PwaManager.stopIdleDetection** Expose the browser's visibility/activity state. See below.
+
+**PwaManager.keepScreenOn**, **PwaManager.allowScreenOff**, **PwaManager.wakeLockActive** Control the screen wake lock, so the display does not dim or sleep.
+
+## Screen State Detection
+
+_PWA Manager_ exposes the browser's best-effort view of whether the app is active, hidden, idle or locked:
+
+```dart
+PwaManager.screenState;               // current PwaScreenState
+PwaManager.onScreenStateChanged;      // Stream<PwaScreenState>
+```
+
+The `PwaScreenState` enum has the following values:
+
+* **PwaScreenState.active**. The page is visible and the window has focus.
+* **PwaScreenState.inactive**. The page is visible but the window does not have focus.
+* **PwaScreenState.hidden**. The page is not visible: another tab/app is in front, the window was minimized, or (on mobile) the screen was turned off or locked.
+* **PwaScreenState.idle**. The user has not interacted with the device for the configured threshold. Chromium-only, and only while idle detection is running.
+* **PwaScreenState.locked**. The device screen is locked. Chromium-only, and only while idle detection is running.
+* **PwaScreenState.unknown**. Off web, or no signal has been received yet.
+
+`active`, `inactive` and `hidden` work in every modern browser via the Page Visibility and focus APIs. `idle` and `locked` require the Chromium-only [Idle Detection API](https://developer.mozilla.org/en-US/docs/Web/API/Idle_Detection_API), and must be enabled from a user gesture:
+
+```dart
+ElevatedButton(
+  onPressed: PwaManager.supportsIdleDetection
+      ? () => PwaManager.startIdleDetection(threshold: 60000)
+      : null,
+  child: const Text('Enable idle detection'),
+);
+```
+
+The browser asks for the `idle-detection` permission. `threshold` is clamped to the API minimum of 60000 ms. Call `PwaManager.stopIdleDetection()` to stop.
+
+### Limitations
+
+* There is no cross-browser API that reports true screen power state. On mobile, turning the screen off or locking the device generally surfaces as `hidden`; on desktop, display sleep is often not reported at all.
+* Only Chromium browsers (Chrome, Edge, Opera, Samsung Internet) can distinguish `locked` and `idle`. Safari and Firefox never report those states.
+* Idle detection requires a secure context (HTTPS) and a top-level frame.
+* `keepScreenOn()` is a convenience proxy, not a detector. The browser releases the wake lock when the page becomes hidden, the battery is low, or the device suspends.
 
 ## Installation and Quick-start Code
 

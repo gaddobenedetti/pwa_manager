@@ -6,11 +6,14 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'pwa_formatting.dart';
 import 'src/device_web.dart';
 import 'src/pwa_toolkit.dart';
+import 'src/screen_state.dart';
+import 'src/screen_state_web.dart';
 import 'src/update_check.dart';
 import 'src/widget_android_install_prompt.dart';
 import 'src/widget_desktop_prompt.dart';
 import 'src/widget_ios_install_prompt.dart';
 import 'src/widget_update_prompt.dart';
+export 'src/screen_state.dart';
 export 'src/update_check.dart';
 
 /*
@@ -120,6 +123,42 @@ class PwaManager extends StatefulWidget {
 
   /// Stores the latest server version and reloads the page to apply updates.
   static void updatePwa() => PwaToolkit.updatePwa();
+
+  /// The current screen/visibility state reported by the browser.
+  ///
+  /// [PwaScreenState.active], [PwaScreenState.inactive] and
+  /// [PwaScreenState.hidden] work in every modern browser. The
+  /// [PwaScreenState.idle] and [PwaScreenState.locked] states are only reported
+  /// after [startIdleDetection] succeeds.
+  static PwaScreenState get screenState => ScreenStateWeb.current;
+
+  /// Emits a new [PwaScreenState] whenever the browser reports a change.
+  static Stream<PwaScreenState> get onScreenStateChanged =>
+      ScreenStateWeb.onChanged;
+
+  /// Whether this browser can report [PwaScreenState.idle] and
+  /// [PwaScreenState.locked].
+  static bool get supportsIdleDetection => ScreenStateWeb.supportsIdleDetection;
+
+  /// Starts idle/screen-lock detection.
+  ///
+  /// Call this from a user gesture (such as a button tap) so the browser can
+  /// request the `idle-detection` permission. [threshold] is the inactivity
+  /// delay in milliseconds, clamped to the API minimum of 60000 ms.
+  static Future<bool> startIdleDetection({int threshold = 60000}) =>
+      ScreenStateWeb.startIdleDetection(threshold: threshold);
+
+  /// Stops idle/screen-lock detection.
+  static void stopIdleDetection() => ScreenStateWeb.stopIdleDetection();
+
+  /// Requests a screen wake lock so the display does not dim or sleep.
+  static Future<bool> keepScreenOn() => ScreenStateWeb.keepScreenOn();
+
+  /// Releases any screen wake lock held by [keepScreenOn].
+  static Future<void> allowScreenOff() => ScreenStateWeb.allowScreenOff();
+
+  /// Whether a screen wake lock is currently held.
+  static bool get wakeLockActive => ScreenStateWeb.wakeLockActive;
 
   @override
   State<PwaManager> createState() => _PwaManagerState();
